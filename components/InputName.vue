@@ -1,27 +1,27 @@
 <script setup lang="ts">
+import { useChatStore } from "../stores/chatStore";
 const props = defineProps({
   message: {
     type: String,
     required: true,
   },
 });
-const newMsg: Ref<string> = ref("");
-const emit = defineEmits(["update"]);
-function addMessage(str: string): void {
-  emit("update", str);
-  newMsg.value = "";
+const store = useChatStore();
+const userName: Ref<string> = ref("");
+function inputName(): void {
+  store.chatAutor = userName.value;
 }
 </script>
 
 <template>
-  <form class="form" @submit.prevent="addMessage(newMsg)">
+  <form class="form" @submit.prevent="inputName">
     <input
       class="input"
       type="text"
-      v-model="newMsg"
+      v-model="userName"
       :placeholder="props.message"
     />
-    <ButtonComplete>Отправить</ButtonComplete>
+    <ButtonComplete>Сохранить</ButtonComplete>
   </form>
 </template>
 <style scoped lang="scss">

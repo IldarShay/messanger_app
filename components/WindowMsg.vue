@@ -1,28 +1,38 @@
 <script setup lang="ts">
-const msgs = [
-  { autor: "Ildar", msg: "Hello" },
-  { autor: "Liya", msg: "lorem10sdsdfsdssdfsdfddddddddddddddddddd" },
-  {
-    autor: "Ildar",
-    msg: "I am w all day. But i`m happy!",
-  },
-];
+import { useChatStore } from "../stores/chatStore";
+import deleteMsg from "../composables/useDeleteMsg";
+import { Message } from "../types/index";
+const store = useChatStore();
+const { $io } = useNuxtApp();
+$io.on("message", (data: Message) => {
+  store.chatMsgs.push(data);
+});
 </script>
 
 <template>
   <div class="window-msg">
-    <div class="window_msg_chat" v-for="(msg, i) of msgs">
-      <div v-if="msg.autor === 'Ildar'" class="person_msg msg">
+    <div class="window_msg_chat" v-for="(msg, i) of store.chatMsgs" :key="i">
+      <div v-if="msg.autor === store.chatAutor" class="person_msg msg">
         <span class="autor-msg">
           {{ msg.autor + ":" }}
         </span>
-        {{ msg.msg }}
+        <div class="delete-icon">
+          <p class="msg-body">{{ msg.msg }}</p>
+          <button @click="deleteMsg(store.chatMsgs, i)">
+            <img class="favicon" src="../assets/delete.ico" alt="" />
+          </button>
+        </div>
       </div>
       <div v-else class="other_msg msg">
         <span class="autor-msg">
           {{ msg.autor + ":" }}
         </span>
-        {{ msg.msg }}
+        <div class="delete-icon">
+          <p class="msg-body">{{ msg.msg }}</p>
+          <button @click="deleteMsg(store.chatMsgs, i)">
+            <img class="favicon" src="../assets/delete.ico" alt="" />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -56,11 +66,32 @@ const msgs = [
   font-family: cursive;
   border: 1px solid rgba(0, 0, 0, 0.105);
   border-radius: 25px;
-  // overflow: hidden;
+}
+.msg-body {
+  margin: 0;
+  overflow: hidden;
   word-wrap: break-word;
+}
+.delete-icon {
+  display: flex;
+  justify-content: space-between;
 }
 .autor-msg {
   font-size: 8px;
   font-family: Arial;
+  opacity: 0.7;
+}
+button {
+  border: none;
+  background-color: rgb(0, 0, 0, 0);
+}
+.favicon {
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+.favicon:active {
+  transform: rotate(25deg);
 }
 </style>
