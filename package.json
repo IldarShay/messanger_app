@@ -6,7 +6,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "ionic:build": "npm run build",
+    "ionic:serve": "npm run dev"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
@@ -22,5 +24,15 @@
   },
   "overrides": {
     "vue": "latest"
-  }
+  },
+  "dependencies": {
+    "@capacitor/android": "5.1.0",
+    "@capacitor/app": "5.0.5",
+    "@capacitor/cli": "5.1.0",
+    "@capacitor/core": "5.1.0",
+    "@capacitor/haptics": "5.0.5",
+    "@capacitor/keyboard": "5.0.5",
+    "@capacitor/status-bar": "5.0.5"
+  },
+  "version": "0.0.0"
 }
