@@ -42,6 +42,6 @@ function addMessage(str: string) {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-image: linear-gradient(45deg, #00dc82, #36e4da, #0047e1);
+  
 }
 </style>
